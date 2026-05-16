@@ -2,6 +2,7 @@
   import { untrack } from 'svelte';
   import { msToDatetimeLocal, datetimeLocalToMs } from '$lib/utils.ts';
   import type { Contraction } from '$lib/types.ts';
+  import { i18n } from '$lib/i18n/index.svelte.ts';
 
   interface Props {
     contraction: Contraction;
@@ -48,7 +49,7 @@
 
 <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions -->
 <dialog use:autoShow onclick={handleBackdropClick} aria-labelledby="edit-title">
-  <h2 id="edit-title" class="modal-title">Edit Contraction</h2>
+  <h2 id="edit-title" class="modal-title">{i18n.t('edit.title')}</h2>
 
   <form
     class="form"
@@ -58,45 +59,49 @@
     }}
   >
     <div class="field">
-      <label for="start-time">Start time</label>
+      <label for="start-time">{i18n.t('edit.startTime')}</label>
       <input id="start-time" type="datetime-local" bind:value={startVal} required />
     </div>
 
     <div class="field">
       <label class="checkbox-label">
         <input type="checkbox" bind:checked={isOngoing} />
-        <span>Still in progress</span>
+        <span>{i18n.t('edit.stillInProgress')}</span>
       </label>
     </div>
 
     {#if !isOngoing}
       <div class="field">
-        <label for="end-time">End time</label>
+        <label for="end-time">{i18n.t('edit.endTime')}</label>
         <input id="end-time" type="datetime-local" bind:value={endVal} />
       </div>
     {/if}
 
     <div class="field">
-      <label for="note">Note (optional)</label>
-      <textarea id="note" bind:value={note} rows="2" placeholder="e.g. water broke, took medication"
+      <label for="note">{i18n.t('edit.note')}</label>
+      <textarea id="note" bind:value={note} rows="2" placeholder={i18n.t('edit.notePlaceholder')}
       ></textarea>
     </div>
 
     <div class="actions">
-      <button type="submit" class="btn-primary">Save</button>
-      <button type="button" class="btn-secondary" onclick={onclose}>Cancel</button>
+      <button type="submit" class="btn-primary">{i18n.t('edit.save')}</button>
+      <button type="button" class="btn-secondary" onclick={onclose}>{i18n.t('edit.cancel')}</button>
     </div>
   </form>
 
   <div class="delete-section">
     {#if confirmDelete}
-      <p class="confirm-text">Delete this contraction?</p>
+      <p class="confirm-text">{i18n.t('edit.deleteConfirm')}</p>
       <div class="confirm-actions">
-        <button class="btn-danger" onclick={ondelete}>Yes, delete</button>
-        <button class="btn-secondary" onclick={() => (confirmDelete = false)}>No, keep it</button>
+        <button class="btn-danger" onclick={ondelete}>{i18n.t('edit.yesDelete')}</button>
+        <button class="btn-secondary" onclick={() => (confirmDelete = false)}
+          >{i18n.t('edit.noKeep')}</button
+        >
       </div>
     {:else}
-      <button class="btn-delete" onclick={() => (confirmDelete = true)}>Delete entry</button>
+      <button class="btn-delete" onclick={() => (confirmDelete = true)}
+        >{i18n.t('edit.deleteEntry')}</button
+      >
     {/if}
   </div>
 </dialog>

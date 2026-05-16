@@ -1,6 +1,8 @@
 <script lang="ts">
   import { store } from '$lib/store.svelte.ts';
   import { formatDuration, formatIntervalMins, formatTime } from '$lib/utils.ts';
+  import { i18n } from '$lib/i18n/index.svelte.ts';
+  import InfoTooltip from './InfoTooltip.svelte';
 
   const laborDuration = $derived.by(() => {
     if (!store.stats.firstContractionAt) return null;
@@ -20,29 +22,41 @@
   );
 </script>
 
-<section class="stats-card" aria-label="Labor summary">
-  <h2 class="title">Labor Summary</h2>
+<section class="stats-card" aria-label={i18n.t('stats.title')}>
+  <h2 class="title">{i18n.t('stats.title')}</h2>
 
   <div class="stats-grid">
     <div class="stat">
       <span class="stat-value">{store.stats.windowCount}</span>
-      <span class="stat-label">contractions (last hr)</span>
+      <span class="stat-label">
+        {i18n.t('stats.contractions')}
+        <InfoTooltip text={i18n.t('tooltip.contractions')} />
+      </span>
     </div>
 
     <div class="stat">
       <span class="stat-value">{avgIntervalLabel}</span>
-      <span class="stat-label">avg interval</span>
+      <span class="stat-label">
+        {i18n.t('stats.avgInterval')}
+        <InfoTooltip text={i18n.t('tooltip.avgInterval')} />
+      </span>
     </div>
 
     <div class="stat">
       <span class="stat-value">{avgDurationLabel}</span>
-      <span class="stat-label">avg duration</span>
+      <span class="stat-label">
+        {i18n.t('stats.avgDuration')}
+        <InfoTooltip text={i18n.t('tooltip.avgDuration')} />
+      </span>
     </div>
 
     {#if laborDuration !== null}
       <div class="stat">
         <span class="stat-value">{formatDuration(laborDuration)}</span>
-        <span class="stat-label">labor time</span>
+        <span class="stat-label">
+          {i18n.t('stats.laborTime')}
+          <InfoTooltip text={i18n.t('tooltip.laborTime')} />
+        </span>
       </div>
     {/if}
   </div>
@@ -51,17 +65,22 @@
     {#if store.stats.is511}
       <span class="rule-icon">✓</span>
       <div class="rule-text">
-        <strong>5-1-1 Rule Met</strong>
+        <strong>{i18n.t('stats.ruleMet')}</strong>
         {#if store.stats.since511}
-          <span>since {formatTime(store.stats.since511)}</span>
+          <span
+            >{i18n.t('stats.ruleSince').replace('{time}', formatTime(store.stats.since511))}</span
+          >
         {/if}
-        <span class="rule-hint">Consider calling your care provider</span>
+        <span class="rule-hint">{i18n.t('stats.ruleMetHint')}</span>
       </div>
     {:else}
       <span class="rule-icon">◐</span>
       <div class="rule-text">
-        <strong>5-1-1 Rule</strong>
-        <span>Need: contractions every ≤5 min, lasting ≥1 min, for 1 hour</span>
+        <strong>
+          {i18n.t('stats.ruleTitle')}
+          <InfoTooltip text={i18n.t('tooltip.rule511')} />
+        </strong>
+        <span>{i18n.t('stats.ruleUnmet')}</span>
       </div>
     {/if}
   </div>
@@ -107,6 +126,9 @@
   .stat-label {
     font-size: 0.78rem;
     color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
   }
 
   .rule-511 {
@@ -152,6 +174,9 @@
   .rule-text strong {
     font-weight: 600;
     color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
   }
 
   .rule-text span {

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { store } from '$lib/store.svelte.ts';
   import { formatDuration } from '$lib/utils.ts';
+  import { i18n } from '$lib/i18n/index.svelte.ts';
   import WakeLockIndicator from './WakeLockIndicator.svelte';
 
   interface Props {
@@ -28,25 +29,38 @@
 <header class="topbar">
   <div class="left">
     {#if store.contractions.length > 0}
-      <span class="labor-time" aria-label="Labor duration">
+      <span class="labor-time" aria-label={i18n.t('topbar.laborDuration')}>
         {formatDuration(laborDuration)}
       </span>
     {:else}
-      <span class="app-name">Contraction Timer</span>
+      <span class="app-name">{i18n.t('app.name')}</span>
     {/if}
   </div>
 
   <div class="center">
     {#if store.contractions.length > 0}
-      <span class="count-badge" aria-label="{store.contractions.length} contractions">
+      <span
+        class="count-badge"
+        aria-label={i18n
+          .t('topbar.contractionCount')
+          .replace('{n}', String(store.contractions.length))}
+      >
         {store.contractions.length}
       </span>
     {/if}
   </div>
 
   <div class="right">
+    <button
+      class="lang-btn"
+      onclick={() => i18n.setLocale(i18n.locale === 'da' ? 'en' : 'da')}
+      aria-label={i18n.t('topbar.languageToggle')}
+      title={i18n.t('topbar.languageToggle')}
+    >
+      {i18n.locale === 'da' ? 'EN' : 'DA'}
+    </button>
     <WakeLockIndicator active={wakeLockActive} />
-    <button class="settings-btn" onclick={onsettings} aria-label="Open settings">
+    <button class="settings-btn" onclick={onsettings} aria-label={i18n.t('topbar.openSettings')}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="22"
@@ -125,6 +139,25 @@
     align-items: center;
     justify-content: center;
     padding: 0 0.5rem;
+  }
+
+  .lang-btn {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-surface-2);
+    min-height: 30px;
+    transition:
+      color 0.15s,
+      background 0.15s;
+  }
+
+  .lang-btn:hover {
+    color: var(--color-text);
+    background: var(--color-surface-2);
   }
 
   .settings-btn {

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { formatDuration } from '$lib/utils.ts';
+  import { i18n } from '$lib/i18n/index.svelte.ts';
 
   interface Props {
     elapsed: number;
@@ -9,7 +10,7 @@
 
 {#if elapsed > 3 * 60 * 1000}
   <div class="banner" role="status">
-    Still in contraction? ({formatDuration(elapsed)}) — tap End when it's done
+    {i18n.t('banner.stillGoing').replace('{duration}', formatDuration(elapsed))}
   </div>
 {/if}
 

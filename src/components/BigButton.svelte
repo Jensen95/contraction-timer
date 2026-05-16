@@ -1,6 +1,7 @@
 <script lang="ts">
   import { store } from '$lib/store.svelte.ts';
   import { formatDuration } from '$lib/utils.ts';
+  import { i18n } from '$lib/i18n/index.svelte.ts';
   import StillGoingBanner from './StillGoingBanner.svelte';
 
   let elapsed = $state(0);
@@ -43,32 +44,36 @@
     class="big-button"
     class:is-active={store.phase === 'active'}
     onclick={handleTap}
-    aria-label={store.phase === 'active' ? 'End contraction' : 'Start contraction'}
+    aria-label={store.phase === 'active'
+      ? i18n.t('btn.endContraction')
+      : i18n.t('btn.startContraction')}
     aria-pressed={store.phase === 'active'}
   >
     <span class="btn-label">
-      {store.phase === 'active' ? 'End Contraction' : 'Start Contraction'}
+      {store.phase === 'active' ? i18n.t('btn.endContraction') : i18n.t('btn.startContraction')}
     </span>
 
     {#if store.phase === 'active'}
       <span class="elapsed" aria-live="polite" aria-atomic="true">
         {formatDuration(elapsed)}
       </span>
-      <span class="hint">tap when it ends</span>
+      <span class="hint">{i18n.t('btn.tapWhenEnds')}</span>
     {:else if store.phase === 'resting'}
       <span class="hint">
-        {restingFor > 0 ? `${formatDuration(restingFor)} since last` : 'tap when next starts'}
+        {restingFor > 0
+          ? `${formatDuration(restingFor)} ${i18n.t('btn.sinceLast')}`
+          : i18n.t('btn.tapWhenNextStarts')}
       </span>
     {:else}
-      <span class="hint">tap when a contraction begins</span>
+      <span class="hint">{i18n.t('btn.tapWhenBegins')}</span>
     {/if}
   </button>
 
   <StillGoingBanner {elapsed} />
 
   {#if store.contractions.length > 0}
-    <button class="undo-btn" onclick={() => store.undo()} aria-label="Undo last action">
-      ↩ Undo last
+    <button class="undo-btn" onclick={() => store.undo()} aria-label={i18n.t('btn.undoLastAria')}>
+      {i18n.t('btn.undoLast')}
     </button>
   {/if}
 </div>

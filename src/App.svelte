@@ -10,6 +10,8 @@
   import { store } from '$lib/store.svelte.ts';
   import { initServiceWorker } from '$lib/sw-registration.ts';
   import type { Contraction } from '$lib/types.ts';
+  import { themeStore } from '$lib/theme.svelte.ts';
+  import { i18n } from '$lib/i18n/index.svelte.ts';
 
   // Wake lock
   let wakeLock = $state<WakeLockSentinel | null>(null);
@@ -36,6 +38,16 @@
     };
     document.addEventListener('visibilitychange', reacquire);
     return () => document.removeEventListener('visibilitychange', reacquire);
+  });
+
+  // Apply theme to <html> element
+  $effect(() => {
+    const el = document.documentElement;
+    if (themeStore.theme === 'auto') {
+      el.removeAttribute('data-theme');
+    } else {
+      el.setAttribute('data-theme', themeStore.theme);
+    }
   });
 
   // Stale active contraction detection
@@ -89,10 +101,9 @@
 {#if staleContraction}
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions -->
   <dialog use:autoShow aria-labelledby="stale-title">
-    <h2 id="stale-title">Active contraction found</h2>
+    <h2 id="stale-title">{i18n.t('stale.title')}</h2>
     <p class="stale-desc">
-      There was an active contraction running when you last closed this app. What would you like to
-      do?
+      {i18n.t('stale.desc')}
     </p>
     <div class="stale-actions">
       <button
@@ -102,7 +113,7 @@
           staleContraction = null;
         }}
       >
-        End it now
+        {i18n.t('stale.endNow')}
       </button>
       <button
         class="btn-secondary"
@@ -111,10 +122,10 @@
           staleContraction = null;
         }}
       >
-        Discard it
+        {i18n.t('stale.discard')}
       </button>
       <button class="btn-secondary" onclick={() => (staleContraction = null)}>
-        Keep it open
+        {i18n.t('stale.keepOpen')}
       </button>
     </div>
   </dialog>

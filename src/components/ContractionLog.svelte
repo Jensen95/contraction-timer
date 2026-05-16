@@ -1,6 +1,7 @@
 <script lang="ts">
   import { store } from '$lib/store.svelte.ts';
   import { formatDuration, formatTime } from '$lib/utils.ts';
+  import { i18n } from '$lib/i18n/index.svelte.ts';
 
   interface Props {
     onedit: (id: string) => void;
@@ -20,9 +21,9 @@
   });
 </script>
 
-<section class="log" aria-label="Contraction log">
+<section class="log" aria-label={i18n.t('log.title')}>
   <h2 class="title">
-    Contraction Log
+    {i18n.t('log.title')}
     <span class="count">{store.contractions.length}</span>
   </h2>
 
@@ -31,9 +32,9 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Start</th>
-          <th scope="col">Duration</th>
-          <th scope="col">Interval</th>
+          <th scope="col">{i18n.t('log.colStart')}</th>
+          <th scope="col">{i18n.t('log.colDuration')}</th>
+          <th scope="col">{i18n.t('log.colInterval')}</th>
         </tr>
       </thead>
       <tbody>
@@ -43,7 +44,7 @@
             onkeydown={(e) => e.key === 'Enter' && onedit(row.id)}
             role="button"
             tabindex="0"
-            aria-label="Edit contraction {row.num}"
+            aria-label={i18n.t('log.editAria').replace('{n}', String(row.num))}
           >
             <td class="num">{row.num}</td>
             <td class="start">{formatTime(row.startedAt)}</td>
@@ -51,7 +52,7 @@
               {#if row.duration !== null}
                 {formatDuration(row.duration)}
               {:else}
-                <span class="ongoing">ongoing…</span>
+                <span class="ongoing">{i18n.t('log.ongoing')}</span>
               {/if}
             </td>
             <td class="interval">

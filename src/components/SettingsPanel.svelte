@@ -1,6 +1,8 @@
 <script lang="ts">
   import { store } from '$lib/store.svelte.ts';
   import { downloadCSV, shareContractions } from '$lib/export.ts';
+  import { i18n } from '$lib/i18n/index.svelte.ts';
+  import { themeStore } from '$lib/theme.svelte.ts';
 
   interface Props {
     onclose: () => void;
@@ -34,44 +36,88 @@
     confirmClear = false;
     onclose();
   }
+
+  type Theme = 'auto' | 'light' | 'dark';
+  const themes: Theme[] = ['auto', 'light', 'dark'];
+  const themeLabels: Record<Theme, () => string> = {
+    auto: () => i18n.t('settings.themeAuto'),
+    light: () => i18n.t('settings.themeLight'),
+    dark: () => i18n.t('settings.themeDark'),
+  };
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions -->
 <dialog use:autoShow onclick={handleBackdropClick} aria-labelledby="settings-title">
   <div class="header">
-    <h2 id="settings-title">Settings</h2>
-    <button class="close-btn" onclick={onclose} aria-label="Close settings">✕</button>
+    <h2 id="settings-title">{i18n.t('settings.title')}</h2>
+    <button class="close-btn" onclick={onclose} aria-label={i18n.t('settings.closeAria')}>✕</button>
   </div>
 
   <section class="section">
-    <h3 class="section-title">Export</h3>
+    <h3 class="section-title">{i18n.t('settings.themeSection')}</h3>
+    <div class="theme-btns">
+      {#each themes as t}
+        <button
+          class="theme-btn"
+          class:is-active={themeStore.theme === t}
+          onclick={() => themeStore.setTheme(t)}
+        >
+          {themeLabels[t]()}
+        </button>
+      {/each}
+    </div>
+  </section>
+
+  <section class="section">
+    <h3 class="section-title">{i18n.t('settings.languageSection')}</h3>
+    <div class="theme-btns">
+      {#each ['en', 'da'] as lang}
+        <button
+          class="theme-btn"
+          class:is-active={i18n.locale === lang}
+          onclick={() => i18n.setLocale(lang as 'en' | 'da')}
+        >
+          {lang === 'en' ? 'English' : 'Dansk'}
+        </button>
+      {/each}
+    </div>
+  </section>
+
+  <section class="section">
+    <h3 class="section-title">{i18n.t('settings.exportSection')}</h3>
     <div class="section-body">
       <button
         class="action-btn"
         onclick={() => downloadCSV(store.contractions)}
         disabled={store.contractions.length === 0}
       >
-        <span class="icon">⬇</span> Download CSV
+        <span class="icon">⬇</span>
+        {i18n.t('settings.downloadCsv')}
       </button>
       {#if canShare}
         <button class="action-btn" onclick={handleShare} disabled={store.contractions.length === 0}>
-          <span class="icon">⎙</span> Share Log
+          <span class="icon">⎙</span>
+          {i18n.t('settings.shareLog')}
         </button>
       {/if}
     </div>
     {#if store.contractions.length === 0}
-      <p class="hint">No contractions recorded yet.</p>
+      <p class="hint">{i18n.t('settings.noData')}</p>
     {/if}
   </section>
 
   <section class="section">
-    <h3 class="section-title">Session</h3>
+    <h3 class="section-title">{i18n.t('settings.sessionSection')}</h3>
     <div class="section-body">
       {#if confirmClear}
-        <p class="confirm-text">Delete all {store.contractions.length} contractions?</p>
+        <p class="confirm-text">
+          {i18n.t('settings.confirmClear').replace('{n}', String(store.contractions.length))}
+        </p>
         <div class="confirm-actions">
-          <button class="btn-danger" onclick={handleClear}>Yes, clear all</button>
-          <button class="btn-secondary" onclick={() => (confirmClear = false)}>Cancel</button>
+          <button class="btn-danger" onclick={handleClear}>{i18n.t('settings.yesClear')}</button>
+          <button class="btn-secondary" onclick={() => (confirmClear = false)}
+            >{i18n.t('settings.cancel')}</button
+          >
         </div>
       {:else}
         <button
@@ -79,17 +125,16 @@
           onclick={() => (confirmClear = true)}
           disabled={store.contractions.length === 0}
         >
-          <span class="icon">⊗</span> Clear All Data
+          <span class="icon">⊗</span>
+          {i18n.t('settings.clearAll')}
         </button>
       {/if}
     </div>
   </section>
 
   <section class="section about">
-    <h3 class="section-title">About</h3>
-    <p class="about-text">
-      Contraction Timer helps track labor contractions for your care team. Works offline.
-    </p>
+    <h3 class="section-title">{i18n.t('settings.aboutSection')}</h3>
+    <p class="about-text">{i18n.t('settings.aboutText')}</p>
     <p class="version">v0.1.0</p>
   </section>
 </dialog>
@@ -151,6 +196,37 @@
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--color-text-muted);
+  }
+
+  .theme-btns {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .theme-btn {
+    flex: 1;
+    padding: 0.5rem;
+    background: var(--color-surface-2);
+    color: var(--color-text-muted);
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-weight: 500;
+    min-height: 40px;
+    transition:
+      background 0.15s,
+      color 0.15s;
+    border: 1px solid transparent;
+  }
+
+  .theme-btn:hover {
+    background: var(--color-surface-2);
+    color: var(--color-text);
+  }
+
+  .theme-btn.is-active {
+    background: var(--color-accent);
+    color: white;
+    border-color: var(--color-accent);
   }
 
   .section-body {
