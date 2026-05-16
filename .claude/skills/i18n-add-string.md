@@ -27,11 +27,12 @@ export const en: Record<MessageKey, string> = {
   // ... existing strings
   'common.startContraction': 'Start Contraction',
   'stats.laborDuration': 'Labor Duration',
-  'your.new.key': 'Your English text here',  // ← Add here
+  'your.new.key': 'Your English text here', // ← Add here
 };
 ```
 
 **Naming convention:** Use dot notation (kebab-case) for organization:
+
 - `common.*` — general UI strings (buttons, labels)
 - `stats.*` — statistics labels and descriptions
 - `modal.*` — modal titles and messages
@@ -51,7 +52,7 @@ export const da: Record<MessageKey, string> = {
   // ... existing strings
   'common.startContraction': 'Start Sammentrækning',
   'stats.laborDuration': 'Arbejdsvarighed',
-  'your.new.key': 'Din danske tekst her',  // ← Add here
+  'your.new.key': 'Din danske tekst her', // ← Add here
 };
 ```
 
@@ -76,6 +77,7 @@ export type MessageKey =
 ```
 
 **Why?** This ensures TypeScript will error if:
+
 1. You use `i18n.t()` with a key that doesn't exist
 2. You forget to add the key to either `en.ts` or `da.ts`
 
@@ -109,12 +111,14 @@ npm run check
 ```
 
 **Expected output:**
+
 ```
 ✓ 0 errors in 1234ms
 ✓ SvelteKit compiler validation
 ```
 
 If you get TypeScript errors, check that:
+
 - Key is spelled identically in `en.ts` and `da.ts`
 - Key is added to `MessageKey` type in `types.ts`
 - No typos in the key string
@@ -203,7 +207,7 @@ export const da = {
 ```svelte
 <script>
   import { i18n } from '$lib/i18n';
-  
+
   let duration = '2 minutes';
 </script>
 
@@ -224,9 +228,7 @@ export const en = {
 };
 
 // Usage:
-i18n.t('message.timeRemaining')
-  .replace('{hours}', '2')
-  .replace('{minutes}', '30')
+i18n.t('message.timeRemaining').replace('{hours}', '2').replace('{minutes}', '30');
 // Output: "2 hours and 30 minutes remaining"
 ```
 
@@ -264,7 +266,7 @@ export const en = {
 
 // src/lib/i18n/locales/da.ts
 export const da = {
-  'button.submitForm': 'Indsend',  // Different key name!
+  'button.submitForm': 'Indsend', // Different key name!
 };
 ```
 
@@ -282,7 +284,7 @@ export const en = {
 };
 
 // src/lib/i18n/types.ts
-export type MessageKey = 'other.key';  // Missing 'new.key'!
+export type MessageKey = 'other.key'; // Missing 'new.key'!
 ```
 
 **Result:** TypeScript error when using `i18n.t('new.key')`.
@@ -295,11 +297,11 @@ export type MessageKey = 'other.key';  // Missing 'new.key'!
 <!-- WRONG: Less reactive -->
 <script>
   import { i18n } from '$lib/i18n';
-  
-  const message = i18n.t('key');  // Evaluated once, not reactive
+
+  const message = i18n.t('key'); // Evaluated once, not reactive
 </script>
 
-<p>{message}</p>  <!-- Won't update when locale changes -->
+<p>{message}</p> <!-- Won't update when locale changes -->
 ```
 
 **Result:** If user switches language, component doesn't re-render the string.
@@ -307,8 +309,7 @@ export type MessageKey = 'other.key';  // Missing 'new.key'!
 **Fix:** Use in template:
 
 ```svelte
-<!-- RIGHT: Reactive -->
-<p>{i18n.t('key')}</p>  <!-- Updates when locale changes -->
+<!-- RIGHT: Reactive --><p>{i18n.t('key')}</p> <!-- Updates when locale changes -->
 ```
 
 ---
@@ -334,8 +335,8 @@ describe('i18n locales', () => {
   it('all keys in English also exist in Danish', () => {
     const enKeys = Object.keys(en);
     const daKeys = Object.keys(da);
-    
-    enKeys.forEach(key => {
+
+    enKeys.forEach((key) => {
       expect(daKeys).toContain(key);
     });
   });
@@ -409,4 +410,4 @@ export type MessageKey =
 
 ---
 
-*Reference for contraction-timer codebase*
+_Reference for contraction-timer codebase_

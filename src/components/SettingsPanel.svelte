@@ -91,11 +91,13 @@
         onclick={() => downloadCSV(store.contractions)}
         disabled={store.contractions.length === 0}
       >
-        <span class="icon">⬇</span> {i18n.t('settings.downloadCsv')}
+        <span class="icon">⬇</span>
+        {i18n.t('settings.downloadCsv')}
       </button>
       {#if canShare}
         <button class="action-btn" onclick={handleShare} disabled={store.contractions.length === 0}>
-          <span class="icon">⎙</span> {i18n.t('settings.shareLog')}
+          <span class="icon">⎙</span>
+          {i18n.t('settings.shareLog')}
         </button>
       {/if}
     </div>
@@ -108,10 +110,14 @@
     <h3 class="section-title">{i18n.t('settings.sessionSection')}</h3>
     <div class="section-body">
       {#if confirmClear}
-        <p class="confirm-text">{i18n.t('settings.confirmClear').replace('{n}', String(store.contractions.length))}</p>
+        <p class="confirm-text">
+          {i18n.t('settings.confirmClear').replace('{n}', String(store.contractions.length))}
+        </p>
         <div class="confirm-actions">
           <button class="btn-danger" onclick={handleClear}>{i18n.t('settings.yesClear')}</button>
-          <button class="btn-secondary" onclick={() => (confirmClear = false)}>{i18n.t('settings.cancel')}</button>
+          <button class="btn-secondary" onclick={() => (confirmClear = false)}
+            >{i18n.t('settings.cancel')}</button
+          >
         </div>
       {:else}
         <button
@@ -119,7 +125,8 @@
           onclick={() => (confirmClear = true)}
           disabled={store.contractions.length === 0}
         >
-          <span class="icon">⊗</span> {i18n.t('settings.clearAll')}
+          <span class="icon">⊗</span>
+          {i18n.t('settings.clearAll')}
         </button>
       {/if}
     </div>
@@ -205,7 +212,9 @@
     font-size: 0.88rem;
     font-weight: 500;
     min-height: 40px;
-    transition: background 0.15s, color 0.15s;
+    transition:
+      background 0.15s,
+      color 0.15s;
     border: 1px solid transparent;
   }
 

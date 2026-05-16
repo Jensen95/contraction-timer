@@ -39,7 +39,12 @@
 
   <div class="center">
     {#if store.contractions.length > 0}
-      <span class="count-badge" aria-label={i18n.t('topbar.contractionCount').replace('{n}', String(store.contractions.length))}>
+      <span
+        class="count-badge"
+        aria-label={i18n
+          .t('topbar.contractionCount')
+          .replace('{n}', String(store.contractions.length))}
+      >
         {store.contractions.length}
       </span>
     {/if}
@@ -145,7 +150,9 @@
     border-radius: var(--radius-sm);
     border: 1px solid var(--color-surface-2);
     min-height: 30px;
-    transition: color 0.15s, background 0.15s;
+    transition:
+      color 0.15s,
+      background 0.15s;
   }
 
   .lang-btn:hover {

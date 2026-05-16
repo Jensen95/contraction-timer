@@ -67,7 +67,9 @@
       <div class="rule-text">
         <strong>{i18n.t('stats.ruleMet')}</strong>
         {#if store.stats.since511}
-          <span>{i18n.t('stats.ruleSince').replace('{time}', formatTime(store.stats.since511))}</span>
+          <span
+            >{i18n.t('stats.ruleSince').replace('{time}', formatTime(store.stats.since511))}</span
+          >
         {/if}
         <span class="rule-hint">{i18n.t('stats.ruleMetHint')}</span>
       </div>

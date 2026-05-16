@@ -94,10 +94,14 @@
       <p class="confirm-text">{i18n.t('edit.deleteConfirm')}</p>
       <div class="confirm-actions">
         <button class="btn-danger" onclick={ondelete}>{i18n.t('edit.yesDelete')}</button>
-        <button class="btn-secondary" onclick={() => (confirmDelete = false)}>{i18n.t('edit.noKeep')}</button>
+        <button class="btn-secondary" onclick={() => (confirmDelete = false)}
+          >{i18n.t('edit.noKeep')}</button
+        >
       </div>
     {:else}
-      <button class="btn-delete" onclick={() => (confirmDelete = true)}>{i18n.t('edit.deleteEntry')}</button>
+      <button class="btn-delete" onclick={() => (confirmDelete = true)}
+        >{i18n.t('edit.deleteEntry')}</button
+      >
     {/if}
   </div>
 </dialog>

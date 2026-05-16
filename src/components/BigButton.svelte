@@ -44,7 +44,9 @@
     class="big-button"
     class:is-active={store.phase === 'active'}
     onclick={handleTap}
-    aria-label={store.phase === 'active' ? i18n.t('btn.endContraction') : i18n.t('btn.startContraction')}
+    aria-label={store.phase === 'active'
+      ? i18n.t('btn.endContraction')
+      : i18n.t('btn.startContraction')}
     aria-pressed={store.phase === 'active'}
   >
     <span class="btn-label">
@@ -58,7 +60,9 @@
       <span class="hint">{i18n.t('btn.tapWhenEnds')}</span>
     {:else if store.phase === 'resting'}
       <span class="hint">
-        {restingFor > 0 ? `${formatDuration(restingFor)} ${i18n.t('btn.sinceLast')}` : i18n.t('btn.tapWhenNextStarts')}
+        {restingFor > 0
+          ? `${formatDuration(restingFor)} ${i18n.t('btn.sinceLast')}`
+          : i18n.t('btn.tapWhenNextStarts')}
       </span>
     {:else}
       <span class="hint">{i18n.t('btn.tapWhenBegins')}</span>

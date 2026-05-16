@@ -31,11 +31,15 @@ const da: Messages = {
   'stats.ruleTitle': '5-1-1-reglen',
   'stats.ruleUnmet': 'Krav: veer hvert ≤5 min, som varer ≥1 min, i 1 time',
   // Tooltips
-  'tooltip.contractions': 'Antal afsluttede veer i de seneste 60 minutter. Dit sundhedsteam bruger dette til at vurdere veernes hyppighed.',
-  'tooltip.avgInterval': 'Gennemsnitlig tid mellem veer. Under aktiv fødsel forkortes intervallerne til ≤5 minutter.',
+  'tooltip.contractions':
+    'Antal afsluttede veer i de seneste 60 minutter. Dit sundhedsteam bruger dette til at vurdere veernes hyppighed.',
+  'tooltip.avgInterval':
+    'Gennemsnitlig tid mellem veer. Under aktiv fødsel forkortes intervallerne til ≤5 minutter.',
   'tooltip.avgDuration': 'Gennemsnitlig varighed af hver ve. Veer ≥1 minut indikerer aktiv fødsel.',
-  'tooltip.laborTime': 'Samlet tid siden din første ve. Hjælper dit sundhedsteam med at følge fødselsforløbet.',
-  'tooltip.rule511': 'Veer hvert 5. minut, der varer 1 minut, i 1 time. At opfylde dette er et almindeligt signal om at ringe til din sundhedsperson.',
+  'tooltip.laborTime':
+    'Samlet tid siden din første ve. Hjælper dit sundhedsteam med at følge fødselsforløbet.',
+  'tooltip.rule511':
+    'Veer hvert 5. minut, der varer 1 minut, i 1 time. At opfylde dette er et almindeligt signal om at ringe til din sundhedsperson.',
   // ContractionLog
   'log.title': 'Veelog',
   'log.colStart': 'Start',
@@ -56,7 +60,8 @@ const da: Messages = {
   'settings.cancel': 'Annuller',
   'settings.clearAll': 'Ryd alle data',
   'settings.aboutSection': 'Om',
-  'settings.aboutText': 'Ve-timer hjælper med at spore fødselsveer for dit sundhedsteam. Fungerer offline.',
+  'settings.aboutText':
+    'Ve-timer hjælper med at spore fødselsveer for dit sundhedsteam. Fungerer offline.',
   'settings.themeSection': 'Tema',
   'settings.themeAuto': 'Automatisk',
   'settings.themeLight': 'Lyst',

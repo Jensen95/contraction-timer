@@ -6,3 +6,4 @@ dist/
 dev-dist/
 coverage/
 docker-compose.override.yml
+.claude/worktrees/

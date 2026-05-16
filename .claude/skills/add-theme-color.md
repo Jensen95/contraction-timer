@@ -27,7 +27,7 @@ Edit `src/app.css` and add your CSS variable to all three theme blocks.
   /* Existing dark theme variables */
   --color-bg: #0f0f0f;
   --color-text: #ffffff;
-  
+
   /* ← Add your new variable here with dark value */
   --color-button-hover: #2a2a2a;
 }
@@ -40,7 +40,7 @@ Edit `src/app.css` and add your CSS variable to all three theme blocks.
   /* Existing light theme variables */
   --color-bg: #ffffff;
   --color-text: #000000;
-  
+
   /* ← Add your new variable here with light value */
   --color-button-hover: #e8e8e8;
 }
@@ -54,7 +54,7 @@ Edit `src/app.css` and add your CSS variable to all three theme blocks.
     /* Existing auto mode variables (same as light) */
     --color-bg: #ffffff;
     --color-text: #000000;
-    
+
     /* ← Add your new variable here (same as light value) */
     --color-button-hover: #e8e8e8;
   }
@@ -62,6 +62,7 @@ Edit `src/app.css` and add your CSS variable to all three theme blocks.
 ```
 
 **Three-step checklist:**
+
 1. Add to `:root` with dark value
 2. Add to `[data-theme='light']` with light value
 3. Add to `@media (prefers-color-scheme: light)` with light value (same as step 2)
@@ -87,7 +88,7 @@ Import the variable using `var()` in your component:
     padding: 0.5rem 1rem;
     cursor: pointer;
   }
-  
+
   button:hover {
     opacity: 0.9;
   }
@@ -103,6 +104,7 @@ Import the variable using `var()` in your component:
 Test your color in all three theme modes:
 
 ### Test Dark Theme
+
 1. Run `npm run dev`
 2. Open Settings (⚙️ icon in TopBar)
 3. Set Theme → **Dark**
@@ -110,11 +112,13 @@ Test your color in all three theme modes:
 5. Reload page → color persists
 
 ### Test Light Theme
+
 1. Settings → Theme → **Light**
 2. Verify your component shows the light color value
 3. Reload page → color persists
 
 ### Test Auto Mode
+
 1. Settings → Theme → **Auto**
 2. If your system prefers light: should show light color
 3. If your system prefers dark: should show dark color
@@ -131,18 +135,18 @@ Test your color in all three theme modes:
 ```css
 :root {
   /* Dark theme */
-  --color-button-active: #4a9eff;  /* Bright blue for dark background */
+  --color-button-active: #4a9eff; /* Bright blue for dark background */
 }
 
 [data-theme='light'] {
   /* Light theme */
-  --color-button-active: #0066cc;  /* Darker blue for light background */
+  --color-button-active: #0066cc; /* Darker blue for light background */
 }
 
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) {
     /* Auto mode (system light preference) */
-    --color-button-active: #0066cc;  /* Same as light */
+    --color-button-active: #0066cc; /* Same as light */
   }
 }
 ```
@@ -158,7 +162,7 @@ Test your color in all three theme modes:
     border: 1px solid var(--color-border);
     border-radius: 0.5rem;
   }
-  
+
   .stat-box.active {
     border-color: var(--color-button-active);
     box-shadow: 0 0 8px var(--color-button-active);
@@ -184,7 +188,7 @@ Test your color in all three theme modes:
 }
 
 [data-theme='light'] {
-  --color-overlay-dark: rgba(0, 0, 0, 0.1);  /* Lighter overlay in light theme */
+  --color-overlay-dark: rgba(0, 0, 0, 0.1); /* Lighter overlay in light theme */
 }
 ```
 
@@ -222,11 +226,11 @@ Test your color in all three theme modes:
 
 ```css
 :root {
-  --color-text-muted: #999999;  /* Gray for dark background */
+  --color-text-muted: #999999; /* Gray for dark background */
 }
 
 [data-theme='light'] {
-  --color-text-muted: #666666;  /* Darker gray for light background */
+  --color-text-muted: #666666; /* Darker gray for light background */
 }
 ```
 
@@ -241,19 +245,19 @@ Use a consistent naming pattern for variables:
   /* Background colors */
   --color-bg: #0f0f0f;
   --color-bg-secondary: #1a1a1a;
-  
+
   /* Text colors */
   --color-text: #ffffff;
   --color-text-muted: #999999;
-  
+
   /* Border colors */
   --color-border: #333333;
-  
+
   /* Component-specific */
   --color-button-bg: #1a1a1a;
   --color-button-hover: #2a2a2a;
   --color-button-active: #4a9eff;
-  
+
   /* Status colors */
   --color-success: #00cc00;
   --color-error: #ff4444;
@@ -262,6 +266,7 @@ Use a consistent naming pattern for variables:
 ```
 
 **Recommended prefixes:**
+
 - `--color-bg-*` — background colors
 - `--color-text-*` — text colors
 - `--color-border-*` — border colors
@@ -278,15 +283,15 @@ Use a consistent naming pattern for variables:
 <!-- src/App.svelte -->
 <script>
   import { themeStore } from '$lib/theme.svelte';
-  
+
   $effect(() => {
     // When theme changes, update HTML attribute
-    document.documentElement.dataset.theme = 
-      themeStore.theme === 'auto' ? '' : themeStore.theme;
+    document.documentElement.dataset.theme = themeStore.theme === 'auto' ? '' : themeStore.theme;
   });
 </script>
 
-<html data-theme="dark">  <!-- Or: data-theme="light" or no attribute for auto -->
+<html data-theme="dark">
+  <!-- Or: data-theme="light" or no attribute for auto -->
   ...
 </html>
 ```
@@ -296,22 +301,22 @@ Use a consistent naming pattern for variables:
 ```css
 /* If data-theme="dark" (or default) */
 :root {
-  --color-bg: #0f0f0f;  /* ← Applied */
+  --color-bg: #0f0f0f; /* ← Applied */
 }
 
 [data-theme='light'] {
-  --color-bg: #ffffff;  /* ← Not applied */
+  --color-bg: #ffffff; /* ← Not applied */
 }
 
 /* If data-theme="light" */
 [data-theme='light'] {
-  --color-bg: #ffffff;  /* ← Applied (overrides :root) */
+  --color-bg: #ffffff; /* ← Applied (overrides :root) */
 }
 
 /* If data-theme not set (auto mode), browser checks system preference */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) {
-    --color-bg: #ffffff;  /* ← Applied if system prefers light */
+    --color-bg: #ffffff; /* ← Applied if system prefers light */
   }
 }
 ```
@@ -321,7 +326,7 @@ Use a consistent naming pattern for variables:
 ```svelte
 <style>
   div {
-    background-color: var(--color-bg);  /* Browser resolves to current value */
+    background-color: var(--color-bg); /* Browser resolves to current value */
   }
 </style>
 ```
@@ -352,7 +357,7 @@ button {
 
 ```css
 :root {
-  --color-button-bg: #1a1a1a;  /* Added here */
+  --color-button-bg: #1a1a1a; /* Added here */
 }
 
 [data-theme='light'] {
@@ -408,7 +413,7 @@ button {
 /* WRONG: This applies when system prefers dark (opposite of what we want) */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --color-button-bg: #f0f0f0;  /* Light value in dark preference? */
+    --color-button-bg: #f0f0f0; /* Light value in dark preference? */
   }
 }
 ```
@@ -419,7 +424,7 @@ button {
 /* RIGHT: This applies when system prefers light */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) {
-    --color-button-bg: #f0f0f0;  /* Light value */
+    --color-button-bg: #f0f0f0; /* Light value */
   }
 }
 ```
@@ -451,9 +456,15 @@ src/app.css  ← Edit this file
 All theme variables are defined in this single file:
 
 ```css
-:root { /* Dark theme defaults */ }
-[data-theme='light'] { /* Light theme overrides */ }
-@media (prefers-color-scheme: light) { /* Auto mode with system light preference */ }
+:root {
+  /* Dark theme defaults */
+}
+[data-theme='light'] {
+  /* Light theme overrides */
+}
+@media (prefers-color-scheme: light) {
+  /* Auto mode with system light preference */
+}
 ```
 
 ---
@@ -481,7 +492,7 @@ All theme variables are defined in this single file:
 ```css
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) {
-    --color-new-variable: #light-color-value;  /* Same as light */
+    --color-new-variable: #light-color-value; /* Same as light */
   }
 }
 ```
@@ -498,4 +509,4 @@ All theme variables are defined in this single file:
 
 ---
 
-*Reference for contraction-timer codebase*
+_Reference for contraction-timer codebase_

@@ -16,7 +16,7 @@ const en = {
   'btn.undoLast': '↩ Undo last',
   'btn.undoLastAria': 'Undo last action',
   // StillGoingBanner
-  'banner.stillGoing': 'Still in contraction? ({duration}) — tap End when it\'s done',
+  'banner.stillGoing': "Still in contraction? ({duration}) — tap End when it's done",
   // StatsCard
   'stats.title': 'Labor Summary',
   'stats.contractions': 'contractions (last hr)',
@@ -29,11 +29,16 @@ const en = {
   'stats.ruleTitle': '5-1-1 Rule',
   'stats.ruleUnmet': 'Need: contractions every ≤5 min, lasting ≥1 min, for 1 hour',
   // Tooltips
-  'tooltip.contractions': 'Number of completed contractions in the last 60 minutes. Used by your care team to gauge labor frequency.',
-  'tooltip.avgInterval': 'Average time between contractions. During active labor, intervals shorten to ≤5 minutes.',
-  'tooltip.avgDuration': 'Average length of each contraction. Contractions ≥1 minute indicate active labor.',
-  'tooltip.laborTime': 'Total time since your first contraction. Helps your care team understand labor progression.',
-  'tooltip.rule511': 'Contractions every 5 min, lasting 1 min, for 1 hour. Meeting this is a common signal to call your provider.',
+  'tooltip.contractions':
+    'Number of completed contractions in the last 60 minutes. Used by your care team to gauge labor frequency.',
+  'tooltip.avgInterval':
+    'Average time between contractions. During active labor, intervals shorten to ≤5 minutes.',
+  'tooltip.avgDuration':
+    'Average length of each contraction. Contractions ≥1 minute indicate active labor.',
+  'tooltip.laborTime':
+    'Total time since your first contraction. Helps your care team understand labor progression.',
+  'tooltip.rule511':
+    'Contractions every 5 min, lasting 1 min, for 1 hour. Meeting this is a common signal to call your provider.',
   // ContractionLog
   'log.title': 'Contraction Log',
   'log.colStart': 'Start',
@@ -54,7 +59,8 @@ const en = {
   'settings.cancel': 'Cancel',
   'settings.clearAll': 'Clear All Data',
   'settings.aboutSection': 'About',
-  'settings.aboutText': 'Contraction Timer helps track labor contractions for your care team. Works offline.',
+  'settings.aboutText':
+    'Contraction Timer helps track labor contractions for your care team. Works offline.',
   'settings.themeSection': 'Theme',
   'settings.themeAuto': 'Auto',
   'settings.themeLight': 'Light',
@@ -75,7 +81,8 @@ const en = {
   'edit.deleteEntry': 'Delete entry',
   // App (stale dialog)
   'stale.title': 'Active contraction found',
-  'stale.desc': 'There was an active contraction running when you last closed this app. What would you like to do?',
+  'stale.desc':
+    'There was an active contraction running when you last closed this app. What would you like to do?',
   'stale.endNow': 'End it now',
   'stale.discard': 'Discard it',
   'stale.keepOpen': 'Keep it open',

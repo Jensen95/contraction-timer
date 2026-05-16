@@ -37,8 +37,8 @@
     class="info-btn"
     type="button"
     popovertarget={uid}
-    aria-label="More information"
-  >ⓘ</button>
+    aria-label="More information">ⓘ</button
+  >
   <div bind:this={popoverEl} id={uid} popover="auto" class="tooltip-popover" role="tooltip">
     {text}
   </div>

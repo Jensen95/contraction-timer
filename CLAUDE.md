@@ -5,6 +5,7 @@
 **Contraction Timer** is a progressive web app (PWA) for tracking labor contractions. It's built with **Svelte 5** (runes), **Vite**, and **TypeScript**. The app requires zero external runtime dependencies beyond Svelte, implementing custom solutions for i18n, theming, and state management.
 
 ### Key Tech Stack
+
 - **Framework:** Svelte 5 with runes (`$state`, `$derived`, `$effect`, `$props`)
 - **Build:** Vite
 - **Language:** TypeScript
@@ -42,9 +43,13 @@ export class ContractionStore {
   contractions = $state<Contraction[]>([]);
   lastStartTime = $state<number | null>(null);
   // ... reactive state properties
-  
-  addContraction() { /* ... */ }
-  deleteContraction(id: string) { /* ... */ }
+
+  addContraction() {
+    /* ... */
+  }
+  deleteContraction(id: string) {
+    /* ... */
+  }
   // ... instance methods
 }
 
@@ -85,11 +90,16 @@ let stats = $derived(computeStats(store.contractions));
 Handles localStorage sync:
 
 ```typescript
-export function loadContractions(): Contraction[] { /* ... */ }
-export function saveContractions(contractions: Contraction[]) { /* ... */ }
+export function loadContractions(): Contraction[] {
+  /* ... */
+}
+export function saveContractions(contractions: Contraction[]) {
+  /* ... */
+}
 ```
 
 **Keys:**
+
 - `contraction-timer:contractions` — JSON array of contractions
 - `contraction-timer:locale` — current locale ('en' or 'da')
 - `contraction-timer:theme` — current theme ('auto', 'light', 'dark')
@@ -99,8 +109,8 @@ export function saveContractions(contractions: Contraction[]) { /* ... */ }
 ### Formatting Utilities: `src/lib/utils.ts`
 
 ```typescript
-export function formatDuration(seconds: number): string;    // "12:34:56"
-export function formatTime(date: Date): string;              // "14:32"
+export function formatDuration(seconds: number): string; // "12:34:56"
+export function formatTime(date: Date): string; // "14:32"
 export function formatIntervalMins(mins: number | null): string; // "5 min" or "—"
 ```
 
@@ -125,9 +135,13 @@ src/lib/i18n/
 export class I18nStore {
   locale = $state<'en' | 'da'>('en');
   private messages: Record<MessageKey, string> = {};
-  
-  t(key: MessageKey): string { /* returns translated string */ }
-  setLocale(newLocale: 'en' | 'da') { /* switch locale, persist */ }
+
+  t(key: MessageKey): string {
+    /* returns translated string */
+  }
+  setLocale(newLocale: 'en' | 'da') {
+    /* switch locale, persist */
+  }
 }
 
 export const i18n = new I18nStore();
@@ -138,6 +152,7 @@ export const i18n = new I18nStore();
 ### How to Add a New Translated String
 
 #### Step 1: Update English strings
+
 Edit `src/lib/i18n/locales/en.ts`:
 
 ```typescript
@@ -149,6 +164,7 @@ export const en: Record<MessageKey, string> = {
 ```
 
 #### Step 2: Update Danish strings
+
 Edit `src/lib/i18n/locales/da.ts`. **Must add the same key**, or TypeScript will error:
 
 ```typescript
@@ -160,6 +176,7 @@ export const da: Record<MessageKey, string> = {
 ```
 
 #### Step 3: Update MessageKey type
+
 Edit `src/lib/i18n/types.ts` to add the new key:
 
 ```typescript
@@ -170,6 +187,7 @@ export type MessageKey =
 ```
 
 #### Step 4: Use in component
+
 ```svelte
 <script>
   import { i18n } from '$lib/i18n';
@@ -182,6 +200,7 @@ export type MessageKey =
 ```
 
 #### Step 5: Verify
+
 ```bash
 npm run check  # TypeScript checks that both locales have all keys
 ```
@@ -195,9 +214,13 @@ npm run check  # TypeScript checks that both locales have all keys
 ```typescript
 export class ThemeStore {
   theme = $state<'auto' | 'light' | 'dark'>('auto');
-  
-  setTheme(newTheme: 'auto' | 'light' | 'dark') { /* ... */ }
-  getEffectiveTheme(): 'light' | 'dark' { /* respects prefers-color-scheme */ }
+
+  setTheme(newTheme: 'auto' | 'light' | 'dark') {
+    /* ... */
+  }
+  getEffectiveTheme(): 'light' | 'dark' {
+    /* respects prefers-color-scheme */
+  }
 }
 
 export const themeStore = new ThemeStore();
@@ -236,25 +259,27 @@ Structure:
 ### How to Add a New Theme Color
 
 #### Step 1: Add to `src/app.css`
+
 Define the variable in all three theme blocks:
 
 ```css
 :root {
-  --color-button-bg: #1a1a1a;  /* Dark value */
+  --color-button-bg: #1a1a1a; /* Dark value */
 }
 
 [data-theme='light'] {
-  --color-button-bg: #f0f0f0;  /* Light value */
+  --color-button-bg: #f0f0f0; /* Light value */
 }
 
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) {
-    --color-button-bg: #f0f0f0;  /* Same as light */
+    --color-button-bg: #f0f0f0; /* Same as light */
   }
 }
 ```
 
 #### Step 2: Use in components
+
 ```svelte
 <style>
   .button {
@@ -264,6 +289,7 @@ Define the variable in all three theme blocks:
 ```
 
 #### Step 3: Test
+
 - Switch theme in Settings → watch the color change
 - Test auto mode (system preference)
 - Check persistence across page reload
@@ -271,6 +297,7 @@ Define the variable in all three theme blocks:
 ### How Theming Works
 
 1. **App.svelte** applies `data-theme` attribute to `<html>` via `$effect`:
+
    ```typescript
    $effect(() => {
      document.documentElement.dataset.theme = themeStore.theme === 'auto' ? '' : themeStore.theme;
@@ -294,7 +321,7 @@ Uses the HTML **Popover API** (browser native, no library):
 ```svelte
 <script>
   let popover: HTMLDivElement;
-  
+
   $effect(() => {
     popover?.addEventListener('mouseenter', () => popover?.showPopover?.());
     popover?.addEventListener('mouseleave', () => popover?.hidePopover?.());
@@ -309,6 +336,7 @@ Uses the HTML **Popover API** (browser native, no library):
 ```
 
 **Features:**
+
 - Desktop: hover to show/hide
 - Mobile: tap `popovertarget` button to toggle
 
@@ -328,6 +356,7 @@ Tooltips only show when there are ≥2 contractions (enough data to make sense).
 ### How to Add a Tooltip to a New Component
 
 #### Step 1: Import InfoTooltip
+
 ```svelte
 <script>
   import InfoTooltip from '$components/InfoTooltip.svelte';
@@ -335,6 +364,7 @@ Tooltips only show when there are ≥2 contractions (enough data to make sense).
 ```
 
 #### Step 2: Wrap content with tooltip
+
 ```svelte
 <InfoTooltip>
   <span slot="label">Your Label</span>
@@ -343,6 +373,7 @@ Tooltips only show when there are ≥2 contractions (enough data to make sense).
 ```
 
 #### Step 3: Style if needed
+
 The tooltip uses browser defaults; override via CSS variable `--tooltip-bg`, etc. in `src/app.css` if needed.
 
 ---
@@ -351,33 +382,33 @@ The tooltip uses browser defaults; override via CSS variable `--tooltip-bg`, etc
 
 ### Layout Components
 
-| Component | Purpose | Location |
-|-----------|---------|----------|
-| **App.svelte** | Root component, mounts store, applies theme, renders main layout | `src/` |
-| **TopBar.svelte** | Header: labor time, badge, locale toggle, settings button | `src/components/` |
+| Component         | Purpose                                                          | Location          |
+| ----------------- | ---------------------------------------------------------------- | ----------------- |
+| **App.svelte**    | Root component, mounts store, applies theme, renders main layout | `src/`            |
+| **TopBar.svelte** | Header: labor time, badge, locale toggle, settings button        | `src/components/` |
 
 ### Main Content Components
 
-| Component | Purpose | Location |
-|-----------|---------|----------|
-| **BigButton.svelte** | Large start/end button for new contraction | `src/components/` |
-| **StatsCard.svelte** | Displays summary stats with tooltips (≥2 contractions) | `src/components/` |
-| **Timeline.svelte** | 60-minute visual timeline (≥2 contractions) | `src/components/` |
-| **ContractionLog.svelte** | Scrollable table of all contractions (≥1 contraction) | `src/components/` |
-| **StillGoingBanner.svelte** | Warning banner if active contraction > 3 min | `src/components/` |
+| Component                   | Purpose                                                | Location          |
+| --------------------------- | ------------------------------------------------------ | ----------------- |
+| **BigButton.svelte**        | Large start/end button for new contraction             | `src/components/` |
+| **StatsCard.svelte**        | Displays summary stats with tooltips (≥2 contractions) | `src/components/` |
+| **Timeline.svelte**         | 60-minute visual timeline (≥2 contractions)            | `src/components/` |
+| **ContractionLog.svelte**   | Scrollable table of all contractions (≥1 contraction)  | `src/components/` |
+| **StillGoingBanner.svelte** | Warning banner if active contraction > 3 min           | `src/components/` |
 
 ### Modal/Overlay Components
 
-| Component | Purpose | Location |
-|-----------|---------|----------|
+| Component                | Purpose                                      | Location          |
+| ------------------------ | -------------------------------------------- | ----------------- |
 | **SettingsPanel.svelte** | Modal: theme, language, export, clear, about | `src/components/` |
-| **EditModal.svelte** | Modal: edit/delete individual contraction | `src/components/` |
+| **EditModal.svelte**     | Modal: edit/delete individual contraction    | `src/components/` |
 
 ### Utility Components
 
-| Component | Purpose | Location |
-|-----------|---------|----------|
-| **InfoTooltip.svelte** | Popover API wrapper for tooltips | `src/components/` |
+| Component                    | Purpose                                  | Location          |
+| ---------------------------- | ---------------------------------------- | ----------------- |
+| **InfoTooltip.svelte**       | Popover API wrapper for tooltips         | `src/components/` |
 | **WakeLockIndicator.svelte** | Small indicator showing wake lock status | `src/components/` |
 
 ---
@@ -391,7 +422,7 @@ The tooltip uses browser defaults; override via CSS variable `--tooltip-bg`, etc
 export class ContractionStore {
   contractions = $state<Contraction[]>([]);
   lastStartTime = $state<number | null>(null);
-  
+
   addContraction() {
     this.contractions.push({
       id: crypto.randomUUID(),
@@ -408,9 +439,9 @@ export class ContractionStore {
 ```svelte
 <script>
   let count = $state(0);
-  
+
   function increment() {
-    count++;  // Triggers re-render
+    count++; // Triggers re-render
   }
 </script>
 
@@ -422,7 +453,7 @@ export class ContractionStore {
 ```svelte
 <script>
   import { store } from '$lib/store.svelte';
-  
+
   let stats = $derived(computeStats(store.contractions));
   let avgDuration = $derived.by(() => {
     return stats.avgDurationMins?.toFixed(1) ?? '—';
@@ -433,6 +464,7 @@ export class ContractionStore {
 ```
 
 **Difference:**
+
 - `$derived(expression)` — simple expression, re-runs when dependencies change
 - `$derived.by(() => { ... })` — block form, useful for complex logic or ternaries
 
@@ -444,13 +476,14 @@ export class ContractionStore {
     const timer = setInterval(() => {
       console.log('Tick');
     }, 1000);
-    
-    return () => clearInterval(timer);  // Cleanup function
+
+    return () => clearInterval(timer); // Cleanup function
   });
 </script>
 ```
 
 **Order of execution:**
+
 1. Effect runs first time on mount
 2. Cleanup function runs on unmount or before re-run
 3. Effect runs again if dependencies change
@@ -464,7 +497,7 @@ export class ContractionStore {
     count: number;
     onUpdate?: (value: number) => void;
   }
-  
+
   let { title, count, onUpdate }: Props = $props();
 </script>
 
@@ -480,15 +513,13 @@ export class ContractionStore {
 ```svelte
 <script>
   let popover = $state<HTMLDivElement | undefined>();
-  
+
   function show() {
     popover?.showPopover();
   }
 </script>
 
-<div bind:this={popover} popover="auto">
-  Content here
-</div>
+<div bind:this={popover} popover="auto">Content here</div>
 
 <button onclick={show}>Show</button>
 ```
@@ -499,7 +530,7 @@ export class ContractionStore {
 // src/lib/store.svelte.ts
 export class ContractionStore {
   contractions = $state<Contraction[]>([]);
-  
+
   addContraction() {
     this.contractions = [...this.contractions, newItem];
   }
@@ -519,9 +550,7 @@ export const store = new ContractionStore();
 {/each}
 
 <!-- Method calls trigger updates -->
-<button onclick={() => store.addContraction()}>
-  Add
-</button>
+<button onclick={() => store.addContraction()}> Add </button>
 ```
 
 ---
@@ -532,7 +561,7 @@ export const store = new ContractionStore();
 
 ```typescript
 // WRONG: src/lib/utils.ts
-export let count = $state(0);  // Error: runes only work in .svelte.ts
+export let count = $state(0); // Error: runes only work in .svelte.ts
 ```
 
 **Fix:** Move to `.svelte.ts` file or use in component:
@@ -573,7 +602,7 @@ export const da = {
 <style>
   /* WRONG */
   button {
-    background-color: #1a1a1a;  /* Won't change with theme */
+    background-color: #1a1a1a; /* Won't change with theme */
   }
 </style>
 ```
@@ -593,9 +622,7 @@ export const da = {
 
 ```svelte
 <!-- WRONG -->
-<button onclick={() => store.contractions = []} class="danger">
-  Clear (don't do this!)
-</button>
+<button onclick={() => (store.contractions = [])} class="danger"> Clear (don't do this!) </button>
 ```
 
 **Fix:** Use class methods:
@@ -611,9 +638,7 @@ export class ContractionStore {
 
 ```svelte
 <!-- RIGHT -->
-<button onclick={() => store.clear()} class="danger">
-  Clear
-</button>
+<button onclick={() => store.clear()} class="danger"> Clear </button>
 ```
 
 ### ❌ Don't forget path aliases
@@ -636,7 +661,7 @@ import InfoTooltip from '$components/InfoTooltip.svelte';
 ```typescript
 // WRONG
 export const store1 = new ContractionStore();
-export const store2 = new ContractionStore();  // Separate state!
+export const store2 = new ContractionStore(); // Separate state!
 ```
 
 **Fix:** Single instance:
@@ -675,7 +700,7 @@ describe('computeStats', () => {
       { id: '1', startTime: 0, endTime: 60 },
       { id: '2', startTime: 100, endTime: 180 },
     ];
-    
+
     const stats = computeStats(contractions);
     expect(stats.avgDurationMins).toBeCloseTo(2); // (60+80) / (60*2) ≈ 1.17 min
   });
@@ -694,12 +719,12 @@ describe('BigButton', () => {
   it('calls onclick handler when clicked', async () => {
     const user = userEvent.setup();
     const handleClick = vi.fn();
-    
+
     render(BigButton, { props: { onclick: handleClick } });
-    
+
     const button = screen.getByRole('button');
     await user.click(button);
-    
+
     expect(handleClick).toHaveBeenCalled();
   });
 });
@@ -716,7 +741,7 @@ describe('ContractionStore', () => {
   beforeEach(() => {
     store.contractions = [];
   });
-  
+
   it('adds a contraction', () => {
     store.addContraction();
     expect(store.contractions).toHaveLength(1);
@@ -809,4 +834,4 @@ contraction-timer/
 
 ---
 
-*Last updated: 2026-05-16*
+_Last updated: 2026-05-16_
