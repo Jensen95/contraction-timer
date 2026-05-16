@@ -1,0 +1,8 @@
+# Copy to docker-compose.override.yml (gitignored) for local dev overrides.
+# docker compose automatically merges this with docker-compose.yml.
+services:
+  dev:
+    ports:
+      - '5174:5173' # change if 5173 is taken locally
+    environment:
+      - VITE_DEBUG=true

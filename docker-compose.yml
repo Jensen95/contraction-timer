@@ -1,0 +1,31 @@
+services:
+  dev:
+    build:
+      context: .
+      target: dev
+    image: contraction-timer:dev
+    container_name: contraction-timer-dev
+    ports:
+      - '5173:5173'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+    tty: true
+    profiles:
+      - dev
+
+  prod:
+    build:
+      context: .
+      target: prod
+    image: contraction-timer:prod
+    container_name: contraction-timer-prod
+    ports:
+      - '8080:80'
+    restart: unless-stopped
+    profiles:
+      - prod
