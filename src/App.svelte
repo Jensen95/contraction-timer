@@ -10,6 +10,7 @@
   import { store } from '$lib/store.svelte.ts';
   import { initServiceWorker } from '$lib/sw-registration.ts';
   import type { Contraction } from '$lib/types.ts';
+  import { themeStore } from '$lib/theme.svelte.ts';
 
   // Wake lock
   let wakeLock = $state<WakeLockSentinel | null>(null);
@@ -36,6 +37,16 @@
     };
     document.addEventListener('visibilitychange', reacquire);
     return () => document.removeEventListener('visibilitychange', reacquire);
+  });
+
+  // Apply theme to <html> element
+  $effect(() => {
+    const el = document.documentElement;
+    if (themeStore.theme === 'auto') {
+      el.removeAttribute('data-theme');
+    } else {
+      el.setAttribute('data-theme', themeStore.theme);
+    }
   });
 
   // Stale active contraction detection
