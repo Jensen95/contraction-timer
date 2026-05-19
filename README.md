@@ -5,7 +5,7 @@ A modern, mobile-friendly Progressive Web App (PWA) for tracking labor contracti
 ## Features
 
 - One-tap start/end contraction tracking
-- Automatic labor stats (duration, interval, labor time, and 5-1-1 indicator)
+- Automatic labor stats (duration, interval, labor time, and 5-1-1 indicator: contractions every 5 minutes, lasting 1 minute, for 1 hour)
 - Visual timeline and detailed contraction log
 - Edit and delete individual entries
 - Export contractions as CSV or share via native share sheet
@@ -52,5 +52,5 @@ App runs at `http://localhost:5173`.
 
 ## Privacy
 
-Contraction data is stored locally in your browser (`localStorage`) and can be exported by the user.
-
+Contraction data is stored locally in your browser (`localStorage`) and can be exported by the user.  
+No contraction data is sent to external servers by the app.
