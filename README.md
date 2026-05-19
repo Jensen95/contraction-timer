@@ -5,7 +5,8 @@ A modern, mobile-friendly Progressive Web App (PWA) for tracking labor contracti
 ## Features
 
 - One-tap start/end contraction tracking
-- Automatic labor stats (duration, interval, labor time, and 5-1-1 indicator: contractions 5 minutes apart, lasting at least 1 minute, for at least 1 hour)
+- Automatic labor stats (duration, interval, labor time, and 5-1-1 indicator)
+  - 5-1-1 means contractions are 5 minutes apart, last at least 1 minute, for at least 1 hour
 - Visual timeline and detailed contraction log
 - Edit and delete individual entries
 - Export contractions as CSV or share via native share sheet
