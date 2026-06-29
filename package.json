@@ -22,7 +22,7 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
     "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/svelte": "^5.4.1",
+    "@testing-library/svelte": "^5.4.2",
     "@typescript/native-preview": "7.0.0-dev.20260628.1",
     "@types/node": "^25.8.0",
     "@vitest/coverage-v8": "^4.1.9",
