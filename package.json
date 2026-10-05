@@ -2,6 +2,16 @@
   "name": "contraction-timer",
   "version": "0.1.0",
   "private": true,
+  "keywords": [
+    "contraction-timer",
+    "pregnancy",
+    "labor",
+    "birth",
+    "pwa",
+    "svelte",
+    "health-tracker",
+    "offline-first"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
